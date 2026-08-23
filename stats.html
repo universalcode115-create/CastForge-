@@ -81,6 +81,10 @@
       <span class="stat-value" id="statInterest">—</span>
     </div>
     <div class="stat-row">
+      <span class="stat-label">New visitors (all-time)</span>
+      <span class="stat-value" id="statVisitors">—</span>
+    </div>
+    <div class="stat-row">
       <span class="stat-label">AssemblyAI hours used (of ~185 free)</span>
       <span class="stat-value" id="statHours">—</span>
     </div>
@@ -125,6 +129,7 @@ async function loadStats(){
     document.getElementById('statTranscriptions').innerText = data.total_transcriptions;
     document.getElementById('statFeedback').innerText = data.total_feedback;
     document.getElementById('statInterest').innerText = data.total_interest;
+    document.getElementById('statVisitors').innerText = data.total_new_visitors;
     document.getElementById('statHours').innerText = data.hours_used;
     statsBox.classList.add('active');
 
@@ -154,4 +159,5 @@ async function loadStats(){
 }
 </script>
 </body>
-</html>
+      </html>
+      
