@@ -18,6 +18,7 @@ const WORKER_URL = "https://castforge.rajukumar98763017.workers.dev/";
 const TRANSCRIBE_URL = "https://castforge.rajukumar98763017.workers.dev/transcribe";
 const TRANSCRIBE_STATUS_URL = "https://castforge.rajukumar98763017.workers.dev/transcribe-status";
 const FEEDBACK_URL = "https://castforge.rajukumar98763017.workers.dev/feedback";
+const VISIT_URL = "https://castforge.rajukumar98763017.workers.dev/visit";
 const MAX_FILE_MB = 500; // AssemblyAI supports up to 2GB — 500MB keeps mobile upload times reasonable
 
 let currentMode = 'audio';
@@ -53,6 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('themeToggle');
   if(btn) btn.innerText = isDark ? '☀️' : '🌙';
 });
+
+// Track new visitors — once per browser, silent, no user-facing effect
+(function trackNewVisitor(){
+  try{
+    if(!localStorage.getItem('jimicut_visited')){
+      localStorage.setItem('jimicut_visited', '1');
+      fetch(VISIT_URL, { method: 'POST' }).catch(()=>{}); // fire-and-forget, never blocks page load
+    }
+  } catch(e){ /* localStorage unavailable — skip silently */ }
+})();
 
 // ---------- Setup ----------
 
@@ -184,8 +195,20 @@ async function callGenerateAPI(prompt){
   return JSON.parse(raw);
 }
 
-async function generateWithRetry(prompt){
-  return await callGenerateAPI(prompt);
+async function generateWithRetry(prompt, onStatusUpdate){
+  try{
+    return await callGenerateAPI(prompt);
+  } catch(err){
+    // Groq's own per-minute token limit — this is temporary and usually clears in ~30-35s.
+    // Safe to retry automatically since it's not our own daily quota.
+    const isTransientRateLimit = /rate limit|try again in/i.test(err.message) && !err.message.includes("today's free limit");
+    if(isTransientRateLimit){
+      if(onStatusUpdate) onStatusUpdate('Briefly rate-limited — retrying automatically in 35s…');
+      await new Promise(r => setTimeout(r, 35000));
+      return await callGenerateAPI(prompt);
+    }
+    throw err;
+  }
 }
 
 // ---------- Audio upload flow ----------
@@ -448,7 +471,9 @@ async function generateContent(){
   const prompt = buildPrompt(transcript);
 
   try{
-    const parsed = await generateWithRetry(prompt);
+    const parsed = await generateWithRetry(prompt, (msg) => {
+      document.getElementById('statusText').innerText = msg;
+    });
 
     renderResults(parsed);
     saveToHistory(transcript, parsed);
@@ -460,7 +485,7 @@ async function generateContent(){
       errorBox.classList.add('active');
       openInterest();
     } else {
-      errorBox.innerText = err.message;
+      errorBox.innerText = 'Something went wrong — please try again in a moment.';
       errorBox.classList.add('active');
     }
   } finally {
@@ -469,4 +494,4 @@ async function generateContent(){
     document.getElementById('waveform').classList.remove('active');
     document.getElementById('statusText').classList.remove('active');
   }
-                          }         
+    }
