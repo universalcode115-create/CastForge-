@@ -26,7 +26,7 @@
   --input-bg: #0D1320;
 }
 *{box-sizing:border-box; margin:0; padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden; width:100%;}
 body{
   background:var(--bg);
   color:var(--text);
@@ -34,6 +34,8 @@ body{
   line-height:1.5;
   transition: background .2s ease, color .2s ease;
   min-height:100vh;
+  overflow-x:hidden;
+  width:100%;
 }
 ::selection{ background:var(--accent); color:#06110B; }
 
@@ -113,7 +115,7 @@ header{
   padding:14px 16px; margin-bottom:10px; cursor:pointer; transition:all .15s;
 }
 .history-item:hover{ border-color:var(--accent-dim); }
-.history-item-title{ font-size:14px; font-weight:600; margin-bottom:4px; }
+.history-item-title{ font-size:14px; font-weight:600; margin-bottom:4px; word-break:break-word; overflow-wrap:anywhere; }
 .history-item-meta{ font-size:11px; color:var(--text-dim); }
 .history-empty{ font-size:13px; color:var(--text-dim); text-align:center; padding:24px 0; }
 .history-delete{
@@ -148,7 +150,7 @@ header{
 .modal-hint{ font-size:11px; color:var(--text-dim); margin-top:8px; }
 .modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
 
-main{max-width:900px; margin:0 auto; padding:0 24px;}
+main{max-width:900px; margin:0 auto; padding:0 24px; width:100%; box-sizing:border-box;}
 
 .hero{
   padding:64px 0 40px;
@@ -225,7 +227,7 @@ textarea::placeholder{ color:#4A5468; }
 }
 .dropzone:hover{ border-color:var(--accent-dim); background:var(--accent-wash); }
 .dropzone-icon{ font-size:32px; }
-.dropzone-text{ font-size:14px; color:var(--text-dim); line-height:1.6; }
+.dropzone-text{ font-size:14px; color:var(--text-dim); line-height:1.6; word-break:break-word; overflow-wrap:anywhere; max-width:100%; }
 .dropzone-sub{ font-size:12px; color:#4A5468; }
 .dropzone.has-file{ border-color:var(--accent); border-style:solid; }
 
