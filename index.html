@@ -120,6 +120,16 @@
       <button class="mode-tab" id="modeTextBtn" onclick="switchMode('text')">Paste transcript</button>
     </div>
 
+    <div class="lang-select-row">
+      <span class="lang-label">Tone:</span>
+      <div class="lang-chips">
+        <button class="tone-chip active" data-tone="default" onclick="setTone('default')">Default</button>
+        <button class="tone-chip" data-tone="professional" onclick="setTone('professional')">Professional</button>
+        <button class="tone-chip" data-tone="funny" onclick="setTone('funny')">Funny</button>
+        <button class="tone-chip" data-tone="inspirational" onclick="setTone('inspirational')">Inspirational</button>
+      </div>
+    </div>
+
     <div id="audioMode">
       <div class="lang-select-row">
         <span class="lang-label">Audio language:</span>
@@ -173,6 +183,9 @@
       <button class="tab" data-tab="social" onclick="switchTab('social')">Social Posts</button>
       <button class="tab" data-tab="youtube" onclick="switchTab('youtube')">YouTube</button>
       <button class="tab" data-tab="linkedin" onclick="switchTab('linkedin')">LinkedIn</button>
+      <button class="tab" data-tab="shorts" onclick="switchTab('shorts')">Shorts/Reels</button>
+      <button class="tab" data-tab="thread" onclick="switchTab('thread')">Twitter Thread</button>
+      <button class="tab" data-tab="newsletter" onclick="switchTab('newsletter')">Newsletter</button>
       <button class="tab" data-tab="blog" onclick="switchTab('blog')">Blog Outline</button>
     </div>
 
@@ -200,6 +213,21 @@
       <div class="edit-hint">✏️ Tap the text to edit before copying</div>
       <div class="output-block" id="out-linkedin" contenteditable="true"></div>
       <button class="copy-btn" onclick="copyOut('out-linkedin')">Copy post</button>
+    </div>
+    <div class="tab-content" id="tab-shorts">
+      <div class="edit-hint">✏️ Tap the text to edit before copying</div>
+      <div class="output-block" id="out-shorts" contenteditable="true"></div>
+      <button class="copy-btn" onclick="copyOut('out-shorts')">Copy script</button>
+    </div>
+    <div class="tab-content" id="tab-thread">
+      <div class="edit-hint">✏️ Tap any tweet to edit it before copying</div>
+      <div id="out-thread"></div>
+      <button class="copy-btn" onclick="copyAllThread()">Copy thread</button>
+    </div>
+    <div class="tab-content" id="tab-newsletter">
+      <div class="edit-hint">✏️ Tap the text to edit before copying</div>
+      <div class="output-block" id="out-newsletter" contenteditable="true"></div>
+      <button class="copy-btn" onclick="copyOut('out-newsletter')">Copy email</button>
     </div>
     <div class="tab-content" id="tab-blog">
       <div class="edit-hint">✏️ Tap the text to edit before copying</div>
@@ -259,5 +287,5 @@
 
 <script src="app.js"></script>
 </body>
-    </html>
+      </html>
   
