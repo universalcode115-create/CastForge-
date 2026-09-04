@@ -232,13 +232,13 @@ textarea::placeholder{ color:#4A5468; }
 .lang-select-row{ display:flex; align-items:center; gap:10px; margin-bottom:14px; flex-wrap:wrap; }
 .lang-label{ font-size:12px; color:var(--text-dim); }
 .lang-chips{ display:flex; gap:6px; }
-.lang-chip{
+.lang-chip, .tone-chip{
   font-size:12px; color:var(--text-dim); background:transparent;
   border:1px solid var(--line); padding:5px 12px; border-radius:20px; cursor:pointer;
   transition:all .15s;
 }
-.lang-chip.active{ background:var(--accent-wash); color:var(--accent); border-color:var(--accent-dim); }
-.lang-chip:hover:not(.active){ border-color:var(--accent-dim); color:var(--text); }
+.lang-chip.active, .tone-chip.active{ background:var(--accent-wash); color:var(--accent); border-color:var(--accent-dim); }
+.lang-chip:hover:not(.active), .tone-chip:hover:not(.active){ border-color:var(--accent-dim); color:var(--text); }
 
 .sample-row{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
 .chip{
@@ -344,4 +344,4 @@ footer{
 }
 .error-box a{ color:var(--accent); }
 .error-box.active{ display:block; }
-                
+  
